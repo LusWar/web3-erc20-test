@@ -6,6 +6,12 @@ const worker = async () => {
 
     const abi = [
         {
+            "inputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+        },
+        {
             "anonymous": false,
             "inputs": [
                 {
@@ -129,6 +135,21 @@ const worker = async () => {
             "type": "function"
         },
         {
+            "constant": true,
+            "inputs": [],
+            "name": "decimals",
+            "outputs": [
+                {
+                    "internalType": "uint8",
+                    "name": "",
+                    "type": "uint8"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
             "constant": false,
             "inputs": [
                 {
@@ -178,6 +199,36 @@ const worker = async () => {
             ],
             "payable": false,
             "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "name",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "symbol",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
             "type": "function"
         },
         {
@@ -257,6 +308,14 @@ const worker = async () => {
     const tokenContract = new web3.eth.Contract(abi, contractAddress);
 
     try {
+        // 获取ERC20的Symbol
+        const symbol = await tokenContract.methods.symbol().call();
+        console.log(symbol)
+
+        // 获取ERC20的Decimal
+        const decimal = await tokenContract.methods.decimals().call();
+        console.log(decimal)
+        
         // 获取ERC20代币余额
         const balanceAddress = "0x6aDE42D1904875eE923ca0231048800D162f4823";
         const balance = await tokenContract.methods.balanceOf(balanceAddress).call();
