@@ -319,7 +319,7 @@ const worker = async () => {
                 console.log(contractAddress + " is not a contract address");
             }
         } else {
-            console.log(contractAddress + " is not a contract address");
+            console.log(contractAddress + " is not a valid address");
         }
 
         // 获取ERC20的Symbol
