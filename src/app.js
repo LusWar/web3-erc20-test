@@ -308,18 +308,26 @@ const worker = async () => {
     const tokenContract = new web3.eth.Contract(abi, contractAddress);
 
     try {
+        // 合约地址校验
+        const code = await web3.eth.getCode(contractAddress);
+        if(code && code !== '0x') {
+            console.log(contractAddress + " is a contract address");
+        } else {
+            console.log(contractAddress + " is not a contract address");
+        }
+
         // 获取ERC20的Symbol
         const symbol = await tokenContract.methods.symbol().call();
-        console.log(symbol)
+        console.log(symbol);
 
         // 获取ERC20的Decimal
         const decimal = await tokenContract.methods.decimals().call();
-        console.log(decimal)
+        console.log(decimal);
         
         // 获取ERC20代币余额
         const balanceAddress = "0x6aDE42D1904875eE923ca0231048800D162f4823";
         const balance = await tokenContract.methods.balanceOf(balanceAddress).call();
-        console.log(balance)
+        console.log(balance);
 
         // ERC20代币转账
         const fromAddress = "0x6aDE42D1904875eE923ca0231048800D162f4823";
