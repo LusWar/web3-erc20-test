@@ -309,9 +309,15 @@ const worker = async () => {
 
     try {
         // 合约地址校验
-        const code = await web3.eth.getCode(contractAddress);
-        if(code && code !== '0x') {
-            console.log(contractAddress + " is a contract address");
+        const validity = web3.utils.checkAddressChecksum(contractAddress);
+        if(validity) {
+            console.log(contractAddress + " is a valid address");
+            const code = await web3.eth.getCode(contractAddress);
+            if(validity && code && code !== '0x') {
+                console.log(contractAddress + " is a contract address");
+            } else {
+                console.log(contractAddress + " is not a contract address");
+            }
         } else {
             console.log(contractAddress + " is not a contract address");
         }
